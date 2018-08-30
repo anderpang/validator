@@ -16,7 +16,7 @@ HTML表单验证，简单易用
 
 #### 使用 
 ```javascript
-   validator.init();  //初始化，在页面初始化时执行一次即可，新增Form无须再调用
+   validator.init();  //初始化，在页面初始化时执行一次即可，新增<form>无须再调用
 ```
 例子
 
