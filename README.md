@@ -16,9 +16,9 @@ HTML表单验证，简单易用
 
 #### 使用 
 ```javascript
-   validator.init();
+   validator.init();  //初始化，在页面初始化时执行一次即可，新增Form无须再调用
 ```
-### 例子
+例子
 
 ```javascript
   <form action="">
@@ -46,7 +46,7 @@ HTML表单验证，简单易用
   </script>
 ```
 
-### 其它
+#### 其它
       三个常规验证: require，pattern,type，以及自定义验证customError；
 
 	  customError错误，用input.setCustomValidity("错误信息")触发，用input.setCustomValidity("")取消;
