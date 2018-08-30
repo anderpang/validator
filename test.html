@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <meta name="author" content="" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <title> new document </title>
+  <style>
+	 .valid-msg{display:block;color:red;}
+	 
+	 form{max-width:400px;margin:1em auto;padding:2em;border:1px solid #CCC;}
+	 .add{display:block;width:8em;margin:1em auto 5em;}
+  </style>
+ </head>
+ <body>
+  <form action=""> 		
+		
+    <p>*姓名：<input type="text" name="name" required pattern=".{1,4}" data-required="请填写姓名" data-pattern="你的姓能超过4个字！！！" /></p>
+	<p>*年龄：<input type="text" name="age" required pattern="\d+" data-pattern="要填数字啊！！！" /></p>
+	<p>*输入密码：<input type="password" name="pwd" required pattern="[\x00-\xff]{6,}" /></p>
+	<p>*核对密码：<input type="password" name="pwd2" required pattern="[\x00-\xff]{6,}" /></p>
+	<p>h5验证邮箱：<input type="email" name="email" data-type="有没有用过电子邮箱啊！" />(IE9不行）</p>
+	<p>邮箱：<input type="email" name="email2" pattern="\w+(?:\.\w+)*@\w+(?:\.\w+)+" data-pattern="有没有用过电子邮箱啊！" />(用正则,IE9可行）</p>
+	<p>
+	   *性别：<select name="sex" required data-required="不选的都是坏人！">
+	     <option value="">性别 </option>
+		 <option value="0">男</option>
+		 <option value="1">女</option>
+	   </select>
+	</p>
+	
+	<p></p>
+	<div>radio加一个便可，全加也行</div>
+	<div><label><input type="radio" name="aa" value="" />*单选一</label></div>
+	<div><label><input type="radio" name="aa" value="" required />*单选二</label></div>
+	
+	<p></p>
+	<div>多选</div>
+	<div>
+		<label><input type="checkbox" name="bb" value="" required data-required="请选择多选一" />*多选一[必选]</label>
+	</div>
+	<div>
+		<label><input type="checkbox" name="bb" value="" required />*多选二[必选]</label>
+	</div>
+	<div>
+		<label><input type="checkbox" name="bb" value=""  />*多选三[非必选]</label>
+	</div>
+	<p><input type="submit" value="提交" /></p>
+  </form>
+
+  <input class="add" type="button" value="动态加一个表单" />
+
+  <script src="validator.js"></script>
+  <script>
+ 
+   /**      
+	  三个常规验证: require，pattern,type，以及自定义验证customError；
+
+	  customError错误，用input.setCustomValidity("错误信息")触发，用input.setCustomValidity("")取消;
+
+	  即时显示错误信息 input.setMessage("错误信息");
+      即时隐藏错误信息 input.setMessage("");
+	
+	  若要兼容IE9--，就不要用type为email、tel、number、url。。。等HTML5自身的验证，要用pattern验证。
+   */
+
+  
+/*************** 初始化，init()必须，use()可选 ************/
+    validator.use(/*{
+		message:{
+		  "required":"请填写该项2",	
+		  "selectRequired":"请选择该项",
+		  "pattern":"信息填写错误",
+		  "type":"信息填写有误"
+		},
+		className:"err-msg",
+		focus:true,
+		callback:function(err,el){
+			if(err){
+				alert(err);
+			};
+		}
+	}*/).init();
+
+/********* 特殊验证 ********/
+
+document.forms[0].addEventListener("change",function(e){
+   var t=e.target,
+	   name=t.name,
+	   inp2,
+	   v1,
+	   v2,
+	   msg;
+
+   if(name==="pwd")
+   {      
+      inp2=this.elements["pwd2"];
+   }
+   else if(name==="pwd2")
+   {
+      inp2=t;
+	  t=this.elements["pwd"];	 
+   }
+
+   if(inp2)
+   {
+      v1=t.value;
+	  v2=inp2.value;	  
+	  
+	  //如果都填写了
+	  if(v1 && v2){
+          msg=v1===v2?"":"两次密码不一致";
+	  }
+	  else{
+		  msg="";
+	  }
+      t.setMessage(msg);
+   }
+},false);
+
+
+/*** 动态添加表单 ****/
+	var strForm=document.forms[0].outerHTML;
+
+	document.querySelector(".add").onclick=function(){
+		this.insertAdjacentHTML("beforeBegin",strForm);
+	};
+
+  </script>
+ </body>
+</html>
