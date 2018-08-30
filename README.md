@@ -2,6 +2,7 @@
 
 HTML表单验证，简单易用
 
+<a href="http://htmlpreview.github.io/?http://github.com/anderpang/validator/blob/master/test.html">演示地址</a>
 
 
 
